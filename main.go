@@ -21,7 +21,7 @@ func main() {
 
 	/*
 	* If args is different than 2, show invalid args
-	*/
+	 */
 	if len(os.Args) != 2 {
 		printError(errInvalidArguments)
 	}
@@ -31,7 +31,30 @@ func main() {
 	for {
 		fmt.Print("What is the current temperature in " + originUnit + " ? ")
 
+		// Assign the Mem-addres of originValue
+		_, err := fmt.Scanln(&originValue)
+
+		if err != nil {
+			printError(errReadingInput)
+		}
+
+		if originUnit == "C" {
+			convertToFahrenheit(originValue)
+		} else {
+			convertToCelsius(originValue)
+		}
+
 		fmt.Print("Would you like to convert another temperature ? (y/n) ")
+
+		_, err = fmt.Scanln(&shouldConvertAgain)
+
+		if err != nil {
+			printError(errReadingInput)
+		}
+
+		shouldConvertAgain = strings.ToUpper(shouldConvertAgain)
+		shouldConvertAgain = strings.TrimSpace(shouldConvertAgain)
+
 
 		if shouldConvertAgain != "Y" {
 			fmt.Println("Good bye!")
